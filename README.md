@@ -1,119 +1,146 @@
-Ticket Support System - Full-Stack Application
-A complete, full-stack ticket support system built with the MERN stack (MongoDB, Express, React, Node.js) and Material-UI. This application allows users to register, log in, create support tickets, reply to them, and manage their profile, all connected to a live backend and database.
+# 🎫 Ticket Support System - Full-Stack Application
 
-Features
-User Authentication: Secure user registration and login system using JWT (JSON Web Tokens).
+![React](https://img.shields.io/badge/React-18-blue) ![MUI](https://img.shields.io/badge/MUI-5-purple) ![MongoDB](https://img.shields.io/badge/MongoDB-6-brightgreen) ![React](https://img.shields.io/badge/React-18-blue?logo=react&logoColor=white) ![MUI](https://img.shields.io/badge/MUI-5-purple?logo=mui&logoColor=white) ![Express](https://img.shields.io/badge/Express-4-black?logo=express&logoColor=white) ![MongoDB](https://img.shields.io/badge/MongoDB-6-brightgreen?logo=mongodb&logoColor=white) ![Redux](https://img.shields.io/badge/Redux-Toolkit-purple?logo=redux&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-5-yellow?logo=vite&logoColor=white)
 
-Protected Routes: Main application pages are only accessible to logged-in users.
 
-Full CRUD for Tickets:
 
-Create: Users can create new support tickets with a title, description, and category.
+A complete, full-stack **ticket support system** built with the **MERN stack** (MongoDB, Express, React, Node.js) and **Material-UI**.  
+This application allows users to register, log in, create support tickets, reply to them, and manage their profile — all connected to a live backend and database.
 
-Read: Users can view a list of all their tickets, separated into "Active" and "Completed" tabs. They can also view the detailed conversation for each ticket.
+---
 
-Update: Users can update the status of a ticket (e.g., from "Open" to "Closed").
+## ✨ Features
 
-Delete: Users can permanently delete tickets.
+### 🔐 User Authentication
+- Secure user registration and login system using **JWT** (JSON Web Tokens).
 
-Ticket Reply System: A full conversation thread for each ticket, allowing for back-and-forth communication.
+### 🛡️ Protected Routes
+- Main application pages are only accessible to **logged-in** users.
 
-Dynamic User-Friendly IDs: Generates short, readable IDs for tickets and users (e.g., TKT-2025..., USR-0001) for a better user experience.
+### 📝 Full CRUD for Tickets
+- **Create**: Users can create new support tickets with a title, description, and category.
+- **Read**: Users can view a list of all their tickets, separated into *Active* and *Completed* tabs, and view detailed conversations.
+- **Update**: Users can update the status of a ticket (e.g., from *Open* to *Closed*).
+- **Delete**: Users can permanently delete tickets.
 
-Dynamic Profile Page: Users can view and update their profile information, with changes saved permanently to the database.
+### 💬 Ticket Reply System
+- Full conversation thread for each ticket, enabling back-and-forth communication.
 
-Dynamic FAQ & Knowledge Base: The "Help Centre" and "Know Hub" pages fetch their content dynamically from the backend.
+### 🆔 Dynamic User-Friendly IDs
+- Generates short, readable IDs for tickets and users (e.g., `TKT-2025...`, `USR-0001`).
 
-Debounced Search: Fast and efficient search functionality on the main ticket and guide pages.
+### 👤 Dynamic Profile Page
+- Users can view and update their profile information, with changes saved permanently.
 
-Responsive Design: The UI is fully responsive and works beautifully on both desktop and mobile devices.
+### 📚 Dynamic FAQ & Knowledge Base
+- "Help Centre" and "Know Hub" pages fetch content dynamically from the backend.
 
-Global State Management: Uses Redux Toolkit to manage the application's state, ensuring a consistent and reliable user experience.
+### 🔍 Debounced Search
+- Fast, efficient search on main ticket and guide pages.
 
-Tech Stack
-Frontend
-React.js: A JavaScript library for building user interfaces.
+### 📱 Responsive Design
+- Works beautifully on both desktop and mobile devices.
 
-Material-UI (MUI): A comprehensive React UI component library.
+### 🌍 Global State Management
+- Uses **Redux Toolkit** for reliable global state handling.
 
-React Router: For handling client-side routing and navigation.
+---
 
-Redux Toolkit: For efficient and predictable global state management.
+## 🛠 Tech Stack
 
-Vite: A modern, fast build tool for frontend development.
+### **Frontend**
+- **React.js** – UI library
+- **Material-UI (MUI)** – UI components
+- **React Router** – Client-side routing
+- **Redux Toolkit** – State management
+- **Vite** – Fast build tool
 
-Backend
-Node.js: A JavaScript runtime for building the server.
+### **Backend**
+- **Node.js** – Runtime
+- **Express.js** – REST API framework
+- **MongoDB** – NoSQL database
+- **Mongoose** – ODM for MongoDB
+- **JWT** – Authentication
+- **bcrypt.js** – Password hashing
+- **CORS** – Cross-origin requests
+- **dotenv** – Environment variables
 
-Express.js: A web application framework for Node.js, used to build the REST API.
+---
 
-MongoDB: A NoSQL database used to store all application data.
+## 🚀 Getting Started
 
-Mongoose: An ODM (Object Data Modeling) library for MongoDB and Node.js.
+Follow these steps to run the project locally.
 
-JWT (JSON Web Tokens): For secure user authentication.
+### ✅ Prerequisites
+- **Node.js** and **npm** installed
+- **MongoDB Atlas** account and connection string
 
-bcrypt.js: For hashing user passwords.
+---
 
-CORS: For enabling cross-origin requests between the frontend and backend.
+## 📦 Installation & Setup
 
-dotenv: For managing environment variables.
-
-Getting Started
-To get a local copy up and running, follow these simple steps.
-
-Prerequisites
-Node.js and npm installed on your machine.
-
-A MongoDB Atlas account and a connection string.
-
-Installation & Setup
-Clone the repository:
-
+### 1️⃣ Clone the repository
+```bash
 git clone https://github.com/your-username/your-repo-name.git
 cd TICKET_SUPPORT_UI
+``` 
 
-Set up the Backend:
-
-Navigate to the backend directory:
-
+### 2️⃣ Backend Setup
+```bash
 cd backend
-
-Install the NPM packages:
-
 npm install
+```
 
-Create a .env file in the backend folder and add your environment variables:
-
+### Create a `.env` file in the backend folder:
+```bash
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_super_secret_jwt_key
 PORT=5000
+```
 
-Set up the Frontend:
-
-Navigate to the frontend directory:
-
+### 3️⃣ Frontend Setup
+```bash
 cd ../vite-project
-
-Install the NPM packages:
-
 npm install
+```
 
-Running the Application
-You will need to have two terminals open to run both the frontend and backend servers simultaneously.
+---
 
-Start the Backend Server:
+### ▶️ Running the Application
 
-In your first terminal, navigate to the backend directory and run:
+You will need two terminals open — one for backend and one for frontend.
 
+### Start Backend Server
+```bash
+cd backend
 npm start
+```
+- Runs on: `http://localhost:5000`
 
-The server will start on http://localhost:5000.
-
-Start the Frontend Server:
-
-In your second terminal, navigate to the vite-project directory and run:
-
+### Start Frontend Server
+```bash
+cd vite-project
 npm run dev
+```
+- Opens at: `http://localhost:5173`
 
-The application will open in your browser, usually at http://localhost:5173.
+---
+
+## 📸 Screenshots
+
+![Homepage](./screenshots/home.png)
+![Tickets Page](./screenshots/tickets.png)
+![Profile Page](./screenshots/profile.png)
+
+## 🌐 Live Demo
+[Work in progress👩‍🏭](https://your-app-link.com)
+
+![React](https://img.shields.io/badge/React-18-blue)
+![MUI](https://img.shields.io/badge/MUI-5-purple)
+![MongoDB](https://img.shields.io/badge/MongoDB-6-brightgreen)
+![React](https://img.shields.io/badge/React-18-blue?logo=react&logoColor=white)
+![MUI](https://img.shields.io/badge/MUI-5-purple?logo=mui&logoColor=white)
+![Express](https://img.shields.io/badge/Express-4-black?logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-6-brightgreen?logo=mongodb&logoColor=white)
+![Redux](https://img.shields.io/badge/Redux-Toolkit-purple?logo=redux&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5-yellow?logo=vite&logoColor=white)
