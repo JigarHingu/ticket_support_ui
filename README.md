@@ -134,13 +134,3 @@ npm run dev
 
 ## 🌐 Live Demo
 [Work in progress👩‍🏭](https://your-app-link.com)
-
-![React](https://img.shields.io/badge/React-18-blue)
-![MUI](https://img.shields.io/badge/MUI-5-purple)
-![MongoDB](https://img.shields.io/badge/MongoDB-6-brightgreen)
-![React](https://img.shields.io/badge/React-18-blue?logo=react&logoColor=white)
-![MUI](https://img.shields.io/badge/MUI-5-purple?logo=mui&logoColor=white)
-![Express](https://img.shields.io/badge/Express-4-black?logo=express&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-6-brightgreen?logo=mongodb&logoColor=white)
-![Redux](https://img.shields.io/badge/Redux-Toolkit-purple?logo=redux&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-5-yellow?logo=vite&logoColor=white)
