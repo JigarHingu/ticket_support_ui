@@ -3,6 +3,7 @@ import ticketsReducer from './slices/ticketsSlice';
 import authReducer from './slices/authSlice'; 
 import faqReducer from './slices/faqSlice';
 import guideReducer from './slices/guideSlice';
+import articleReducer from './slices/articleSlice';
 
 // The store is the single source of truth for our app's state.
 // We combine all our different slices here.
@@ -12,5 +13,6 @@ export const store = configureStore({
     auth: authReducer,
     faqs: faqReducer,
     guides: guideReducer,
+    articles: articleReducer, 
   },
 });

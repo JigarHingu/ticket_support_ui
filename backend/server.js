@@ -7,6 +7,7 @@ const ticketRoutes = require('./routes/ticketRoutes');
 const userRoutes = require('./routes/userRoutes');
 const faqRoutes = require('./routes/faqRoutes');
 const guideRoutes = require('./routes/guideRoutes');
+const articleRoutes = require('./routes/articleRoutes');
 
 const app = express();
 
@@ -21,7 +22,7 @@ app.get("/", (req, res) => {
     <html>
       <body style="text-align:center; padding-top:50px;">
         <h1>API WORKING ✅</h1>
-        <img src="./logo.png" alt="API Image" width="1500" />
+        <img src="./logo.png" alt="API Image" width="1000" />
       </body>
     </html>
   `);
@@ -31,6 +32,7 @@ app.use('/api/tickets', ticketRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/faqs', faqRoutes);
 app.use('/api/guides', guideRoutes);
+app.use('/api/articles', articleRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)
