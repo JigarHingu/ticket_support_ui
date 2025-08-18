@@ -12,12 +12,14 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { createArticleAPI } from '../store/slices/articleSlice';
+import ReactQuill from 'react-quill-new'; // 1. Import ReactQuill
+import 'react-quill-new/dist/quill.snow.css'; // 2. Import the styles for the editor
 
 const CreateArticlePage = () => {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
-  const [content, setContent] = useState('');
-  const [status, setStatus] = useState('Published'); // Default to published
+  const [content, setContent] = useState(''); // This will now store HTML content
+  const [status, setStatus] = useState('Published');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,7 +28,18 @@ const CreateArticlePage = () => {
     event.preventDefault();
     const articleData = { title, category, content, status };
     dispatch(createArticleAPI(articleData));
-    navigate('/admin/articles'); // Redirect back to the article list after creation
+    navigate('/admin/articles');
+  };
+
+  // 3. Define the modules for the ReactQuill toolbar
+  const quillModules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+      ['link', 'image'],
+      ['clean']
+    ],
   };
 
   return (
@@ -38,7 +51,7 @@ const CreateArticlePage = () => {
       <Box component="form" onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           {/* Main Content Area */}
-          <Grid item xs={12} md={8}>
+          <Grid size={{ xs: 12, md: 8 }}> 
             <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'background.paper' }}>
               <TextField
                 fullWidth
@@ -49,21 +62,19 @@ const CreateArticlePage = () => {
                 sx={{ mb: 3 }}
                 required
               />
-              <TextField
-                fullWidth
-                label="Article Content"
-                variant="outlined"
-                multiline
-                rows={15} // A large text area for the article body
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                required
+              {/* 4. Replace the TextField with the ReactQuill component */}
+              <ReactQuill 
+                theme="snow" 
+                value={content} 
+                onChange={setContent}
+                modules={quillModules}
+                style={{ height: '400px', marginBottom: '50px' }}
               />
             </Paper>
           </Grid>
 
           {/* Right Sidebar for Settings */}
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Paper sx={{ p: 3, borderRadius: 3, backgroundColor: 'background.paper' }}>
               <Typography variant="h6" fontWeight={600} mb={2}>
                 Settings
@@ -105,7 +116,7 @@ const CreateArticlePage = () => {
                 </Button>
                 <Button
                   variant="outlined"
-                  onClick={() => navigate('/admin/articles')} // Go back without saving
+                  onClick={() => navigate('/admin/articles')}
                   fullWidth
                   sx={{ textTransform: 'none', fontWeight: 600 }}
                 >

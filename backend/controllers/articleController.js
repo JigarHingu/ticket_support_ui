@@ -5,13 +5,33 @@ const mongoose = require('mongoose');
 // @route   GET /api/articles
 const getArticles = async (req, res) => {
   try {
-    // Find all articles and populate the author's name
     const articles = await Article.find({}).sort({ createdAt: -1 }).populate('author', 'name');
     res.status(200).json(articles);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
+// @desc    Get a single article by ID
+// @route   GET /api/articles/:id
+const getArticle = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'Invalid article ID.' });
+    }
+
+    try {
+        const article = await Article.findById(id).populate('author', 'name');
+        if (!article) {
+            return res.status(404).json({ error: 'Article not found.' });
+        }
+        res.status(200).json(article);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 
 // @desc    Create a new article
 // @route   POST /api/articles
@@ -28,7 +48,7 @@ const createArticle = async (req, res) => {
       content,
       category,
       status,
-      author: req.user._id, // Get the logged-in user's ID from the protect middleware
+      author: req.user._id,
     });
     res.status(201).json(article);
   } catch (error) {
@@ -80,6 +100,7 @@ const deleteArticle = async (req, res) => {
 
 module.exports = {
   getArticles,
+  getArticle, // Export the new function
   createArticle,
   updateArticle,
   deleteArticle,

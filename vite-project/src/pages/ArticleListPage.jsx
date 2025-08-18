@@ -1,33 +1,32 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Container,
   Typography,
   Button,
   CircularProgress,
+  useMediaQuery,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { fetchArticles, deleteArticleAPI } from '../store/slices/articleSlice';
-import ArticleListItem from '../components/shared/ArticleListItem'; // 1. Import the new component
+import ArticleListItem from '../components/shared/ArticleListItem';
+import { useTheme } from '@mui/material/styles';
 
 const ArticleListPage = () => {
   const dispatch = useDispatch();
-//   const navigate = useNavigate();
   const { articles, status, error } = useSelector((state) => state.articles);
 
+  const theme = useTheme();
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm')); // true if <600px
+
   useEffect(() => {
-    // Fetch articles when the component loads
     dispatch(fetchArticles());
   }, [dispatch]);
 
-  // 2. Create handler functions for edit and delete
   const handleEdit = (id) => {
-    // We will build the edit page later
     console.log('Navigate to edit page for article:', id);
-    // navigate(`/admin/articles/edit/${id}`);
   };
 
   const handleDelete = (id) => {
@@ -36,9 +35,7 @@ const ArticleListPage = () => {
     }
   };
 
-
   let content;
-
   if (status === 'loading') {
     content = (
       <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
@@ -48,9 +45,8 @@ const ArticleListPage = () => {
   } else if (status === 'succeeded') {
     content = (
       <Box>
-        {/* 3. Map over the articles and render the new component */}
         {articles.map((article) => (
-          <ArticleListItem 
+          <ArticleListItem
             key={article._id}
             article={article}
             onEdit={() => handleEdit(article._id)}
@@ -69,18 +65,32 @@ const ArticleListPage = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          mb: 3,
+        }}
+      >
         <Typography variant="h5" fontWeight={600}>
           Manage Articles
         </Typography>
         <Button
           component={Link}
-          to="/admin/articles/create" // We'll create this route later
+          to="/admin/articles/create"
           variant="contained"
           startIcon={<AddIcon />}
-          sx={{ textTransform: 'none', fontWeight: 600 }}
+          sx={{
+            textTransform: 'none',
+            fontWeight: 600,
+            minWidth: isSmall ? 40 : 120, // shrink button on small screen
+            p: 1,
+            pr: isSmall ? 0 : 2,
+            pl:isSmall ? 1.3 : 2,
+          }}
         >
-          Create Article
+          {isSmall ? '' : 'Create Article'}
         </Button>
       </Box>
 

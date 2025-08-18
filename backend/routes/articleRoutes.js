@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {
   getArticles,
+  getArticle,
   createArticle,
   updateArticle,
   deleteArticle,
@@ -13,6 +14,9 @@ const { protect } = require('../middleware/authMiddleware');
 
 // GET all articles
 router.get('/', protect, getArticles);
+
+// GET a single article by ID
+router.get('/:id', protect, getArticle);
 
 // POST a new article
 router.post('/', protect, createArticle);
