@@ -76,7 +76,7 @@ export const updateUserProfileAPI = createAsyncThunk(
   }
 );
 
-// 1. Define the new async thunk for SAVING/UNSAVING a guide
+// Define the new async thunk for SAVING/UNSAVING a guide
 export const toggleSaveGuideAPI = createAsyncThunk(
   'auth/toggleSaveGuide',
   async (guideId, thunkAPI) => {
@@ -178,7 +178,7 @@ const authSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
-      // 2. Add case for saving/unsaving a guide
+      // Add case for saving/unsaving a guide
       .addCase(toggleSaveGuideAPI.fulfilled, (state, action) => {
         // Update the user state with the new savedGuides list
         state.user = action.payload;

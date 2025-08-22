@@ -12,24 +12,23 @@ const replySchema = new Schema(
     user: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: 'User', // This creates a reference to our User model
+      ref: "User", // This creates a reference to our User model
     },
     name: {
       type: String,
       required: true,
     },
     role: {
-        type: String,
-        required: true,
-    }
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
 
-
 const ticketSchema = new mongoose.Schema(
   {
-     // This is the new field for the user-friendly ID
+    // This is the new field for the user-friendly ID
     ticketId: {
       type: String,
       required: true,
@@ -46,8 +45,8 @@ const ticketSchema = new mongoose.Schema(
     status: {
       type: String,
       required: true,
-      enum: ["Open", "Closed"], 
-      default: "Open", 
+      enum: ["Open", "Closed"],
+      default: "Open",
     },
     tags: {
       type: [String],
@@ -58,7 +57,6 @@ const ticketSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
 
 const Ticket = mongoose.model("Ticket", ticketSchema);
 

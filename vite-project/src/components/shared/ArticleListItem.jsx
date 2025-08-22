@@ -28,7 +28,7 @@ const ArticleListItem = ({ article, onEdit, onDelete }) => {
         <Typography variant="body2" color="text.secondary">
           by {article.author.name}
         </Typography>
-        <Box>
+        <Box >
           <IconButton size="small" onClick={onEdit}>
             <EditIcon />
           </IconButton>

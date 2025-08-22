@@ -23,7 +23,7 @@ const ProfilePage = () => {
     (state) => state.auth
   );
 
-  // 1. Initialize form state with empty strings to prevent the error
+  // Initialize form state with empty strings to prevent the error
   const [profileData, setProfileData] = useState({
     name: "",
     email: "",
@@ -36,7 +36,7 @@ const ProfilePage = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const fileInputRef = useRef(null);
 
-  // 2. This useEffect hook will now safely populate the form AFTER the user data has loaded
+  // This useEffect hook will now safely populate the form AFTER the user data has loaded
   useEffect(() => {
     if (user && user.user) {
       // Check that user and user.user exist

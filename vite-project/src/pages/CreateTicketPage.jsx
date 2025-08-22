@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux"; // 1. Import useSelector
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   Container,
@@ -23,7 +23,7 @@ const CreateTicketPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // 2. Get the logged-in user's data from the Redux store
+  // Get the logged-in user's data from the Redux store
   const { user } = useSelector((state) => state.auth);
 
   console.log("User object from Redux:", user);
@@ -39,7 +39,7 @@ const CreateTicketPage = () => {
       title: title || "No Title Provided",
       description: description,
       tags: [`@${category}`, `@${subcategory}`],
-      // 3. Use the logged-in user's name
+      // Use the logged-in user's name
       repliedBy: user ? user.name : "Guest", 
     };
 

@@ -12,11 +12,14 @@ import {
   IconButton,
   Drawer,
   useTheme,
+  Button, 
 } from '@mui/material';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, Link } from 'react-router-dom'; 
 import ArticleIcon from '@mui/icons-material/Article';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MenuIcon from '@mui/icons-material/Menu';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp'; 
+import QuizIcon from '@mui/icons-material/Quiz';
 
 const drawerWidth = 240;
 
@@ -31,6 +34,7 @@ const AdminLayout = () => {
   const navItems = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/admin/dashboard' },
     { text: 'Manage Articles', icon: <ArticleIcon />, path: '/admin/articles' },
+    { text: 'Manage FAQs', icon: <QuizIcon />, path: '/admin/faqs' },
   ];
 
   const drawerContent = (
@@ -79,7 +83,7 @@ const AdminLayout = () => {
           boxShadow: 'none',
           borderBottom: '1px solid',
           borderColor: 'divider',
-          zIndex: theme.zIndex.drawer + 1, // keep appbar above drawer
+          zIndex: theme.zIndex.drawer + 1,
         }}
       >
         <Toolbar>
@@ -95,6 +99,18 @@ const AdminLayout = () => {
           <Typography variant="h6" noWrap component="div" fontWeight={600}>
             Dashboard
           </Typography>
+          {/* This Box pushes the button to the far right */}
+          <Box sx={{ flexGrow: 1 }} /> 
+          {/* Add the "Back to Main Site" button */}
+          <Button
+            component={Link}
+            to="/"
+            variant="outlined"
+            startIcon={<ExitToAppIcon />}
+            sx={{ textTransform: 'none', fontWeight: 600, p: '10px' }}
+          >
+            Back to Main Site
+          </Button>
         </Toolbar>
       </AppBar>
 
@@ -110,7 +126,7 @@ const AdminLayout = () => {
           onClose={handleDrawerToggle}
           ModalProps={{ keepMounted: true,
             disableRestoreFocus: true
-           }} // better performance on mobile
+           }}
           sx={{
             display: { xs: 'block', md: 'none' },
             '& .MuiDrawer-paper': {

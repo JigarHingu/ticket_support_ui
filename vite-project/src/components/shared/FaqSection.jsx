@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'; // 1. Import useMemo
+import { useState, useEffect, useMemo } from 'react';
 import {
   Box,
   Typography,
@@ -14,7 +14,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { fetchFaqs } from '../../store/slices/faqSlice';
 
-// 2. The component now accepts searchQuery as a prop
+// This component is now a simple, read-only display for FAQs
 const FaqSection = ({ searchQuery }) => {
   const [tabValue, setTabValue] = useState(0);
   const [expanded, setExpanded] = useState('panel0');
@@ -29,7 +29,6 @@ const FaqSection = ({ searchQuery }) => {
     }
   }, [status, dispatch]);
 
-  // 3. Filter the FAQs based on the search query
   const filteredFaqs = useMemo(() => {
     if (!searchQuery) {
       return faqs;
@@ -40,8 +39,6 @@ const FaqSection = ({ searchQuery }) => {
     );
   }, [faqs, searchQuery]);
 
-
-  // 4. Transform the FILTERED array of FAQs into a grouped object
   const faqData = filteredFaqs.reduce((acc, faq) => {
     const { category } = faq;
     if (!acc[category]) {
@@ -74,23 +71,9 @@ const FaqSection = ({ searchQuery }) => {
           scrollButtons="auto"
           allowScrollButtonsMobile
           aria-label="scrollable auto tabs example"
-          sx={{
-            '& .MuiTabs-indicator': {
-              backgroundColor: 'primary.main',
-              height: '3px',
-            },
-            '& .MuiTab-root': {
-              textTransform: 'none',
-              fontWeight: 600,
-              color: 'text.secondary',
-              '&.Mui-selected': {
-                color: 'text.primary',
-              },
-            },
-          }}
         >
           {tabCategories.map((category) => (
-            <Tab key={category} label={category} />
+            <Tab key={category} label={category} sx={{ textTransform: "none" }}/>
           ))}
         </Tabs>
       </Box>
@@ -107,7 +90,6 @@ const FaqSection = ({ searchQuery }) => {
             Error: {error}
           </Typography>
         )}
-        {/* 5. Display a message if no results are found */}
         {status === 'succeeded' && currentFaqs.length === 0 && (
             <Typography align="center" sx={{ my: 4, color: 'text.secondary' }}>
                 No questions found matching your search.

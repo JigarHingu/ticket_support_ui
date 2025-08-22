@@ -12,8 +12,8 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { createArticleAPI } from '../store/slices/articleSlice';
-import ReactQuill from 'react-quill-new'; // 1. Import ReactQuill
-import 'react-quill-new/dist/quill.snow.css'; // 2. Import the styles for the editor
+import ReactQuill from 'react-quill-new'; 
+import 'react-quill-new/dist/quill.snow.css';
 
 const CreateArticlePage = () => {
   const [title, setTitle] = useState('');
@@ -31,7 +31,7 @@ const CreateArticlePage = () => {
     navigate('/admin/articles');
   };
 
-  // 3. Define the modules for the ReactQuill toolbar
+  // Define the modules for the ReactQuill toolbar
   const quillModules = {
     toolbar: [
       [{ 'header': [1, 2, 3, false] }],
@@ -62,7 +62,7 @@ const CreateArticlePage = () => {
                 sx={{ mb: 3 }}
                 required
               />
-              {/* 4. Replace the TextField with the ReactQuill component */}
+              {/* Replace the TextField with the ReactQuill component */}
               <ReactQuill 
                 theme="snow" 
                 value={content} 

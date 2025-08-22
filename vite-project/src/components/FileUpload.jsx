@@ -1,8 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { useDropzone } from 'react-dropzone';
-// highlight-start
-import UploadFileIcon from '@mui/icons-material/UploadFile'; // Use an icon from MUI
-// highlight-end
+import UploadFileIcon from '@mui/icons-material/UploadFile'; 
 
 const FileUpload = ({ onUpload }) => {
   const { getRootProps, getInputProps } = useDropzone({
