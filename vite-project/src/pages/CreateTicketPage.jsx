@@ -26,7 +26,7 @@ const CreateTicketPage = () => {
   // Get the logged-in user's data from the Redux store
   const { user } = useSelector((state) => state.auth);
 
-  console.log("User object from Redux:", user);
+  // console.log("User object from Redux:", user);
 
   const handleFileUpload = (files) => {
     setUploadedFiles((prevFiles) => [...prevFiles, ...files]);
@@ -75,6 +75,7 @@ const CreateTicketPage = () => {
                 SelectProps={{
                   displayEmpty: true,
                 }}
+                required
                 sx={{
                   "& .MuiSelect-select": {
                     opacity: category === "" ? 0.6 : 1,
@@ -108,6 +109,7 @@ const CreateTicketPage = () => {
                 SelectProps={{
                   displayEmpty: true,
                 }}
+                required
                 sx={{
                   "& .MuiSelect-select": {
                     opacity: subcategory === "" ? 0.6 : 1,
@@ -142,6 +144,7 @@ const CreateTicketPage = () => {
           placeholder="Enter Ticket Title Here"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          required
         />
 
         <Typography
@@ -157,6 +160,7 @@ const CreateTicketPage = () => {
           placeholder="Enter your complaint here..."
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          required
         />
 
         <Typography

@@ -21,7 +21,7 @@ const TicketCard = ({ _id, ticketId, title, tags, replies, createdAt, status }) 
   // Get the name of the first replier (the creator)
   const creatorName = replies && replies.length > 0 ? replies[0].name : 'N/A';
 
-    console.log(`Rendering TicketCard with _id: ${_id}`);
+    // console.log(`Rendering TicketCard with _id: ${_id}`);
 
   return (
     <Box sx={{ backgroundColor: 'background.paper', p: 2, borderRadius: 3, mb: 2 }}>

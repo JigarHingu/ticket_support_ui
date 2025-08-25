@@ -14,6 +14,8 @@ import {
   IconButton,
   Avatar,
   Button,
+  MenuItem,
+  Paper,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import AttachmentIcon from "@mui/icons-material/Attachment";
@@ -41,25 +43,37 @@ const ReplyCard = ({ reply }) => {
     return name.substring(0, 2).toUpperCase();
   };
 
+  // Differentiate style based on who sent the message
+  const isAdminReply = reply.role === "Admin" || reply.role === "Support Team";
+
   return (
-    <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+    <Box
+      sx={{
+        display: "flex",
+        gap: 2,
+        mt: 2,
+        flexDirection: isAdminReply ? "row-reverse" : "row", // Align admin replies to the right
+      }}
+    >
       <Avatar
         sx={{
           width: 32,
           height: 32,
-          bgcolor: "primary.main",
+          bgcolor: isAdminReply ? "secondary.main" : "primary.main",
           fontSize: "0.875rem",
           fontWeight: "700",
         }}
       >
         {getInitials(reply.name)}
       </Avatar>
-      <Box
+      <Paper
+        elevation={2}
         sx={{
-          backgroundColor: "background.default",
           p: 2,
           borderRadius: 2,
-          width: "100%",
+          width: "fit-content",
+          maxWidth: "80%",
+          backgroundColor: isAdminReply ? "#334155" : "background.default",
         }}
       >
         <Box
@@ -73,14 +87,18 @@ const ReplyCard = ({ reply }) => {
           <Typography variant="subtitle2" fontWeight={600}>
             {reply.name}
           </Typography>
-          <Typography variant="caption" color="text.secondary">
+          <Typography variant="caption" color="text.secondary" sx={{ ml: 2 }}>
             {new Date(reply.createdAt).toLocaleString("en-IN")}
           </Typography>
         </Box>
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ whiteSpace: "pre-wrap" }}
+        >
           {reply.text}
         </Typography>
-      </Box>
+      </Paper>
     </Box>
   );
 };
@@ -96,7 +114,7 @@ const TicketDetailsPage = () => {
   );
 
   const [statusValue, setStatusValue] = useState(
-    ticketData?.status || "Closed"
+    ticketData?.status || "Awaiting Agent"
   );
   const [files, setFiles] = useState(ticketData?.uploadedFiles || []);
   const [replyText, setReplyText] = useState("");
@@ -218,119 +236,46 @@ const TicketDetailsPage = () => {
             >
               Mark As
             </Typography>
-            <FormControl>
-              <RadioGroup row value={statusValue} onChange={handleStatusChange}>
-                <FormControlLabel
-                  value="Open"
-                  control={
-                    <Radio
-                      icon={
-                        <Box
-                          sx={{
-                            width: 18,
-                            height: 18,
-                            borderRadius: "50%",
-                            border: "2px solid #fff",
-                            backgroundColor: "#fff",
-                          }}
-                        />
-                      }
-                      checkedIcon={
-                        <Box
-                          sx={{
-                            width: 18,
-                            height: 18,
-                            borderRadius: "50%",
-                            backgroundColor: "#fff",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              width: 11,
-                              height: 11,
-                              borderRadius: "50%",
-                              backgroundColor: "#34C759",
-                            }}
-                          />
-                        </Box>
-                      }
-                    />
-                  }
-                  label="Un Resolved"
-                />
-                <FormControlLabel
-                  value="Closed"
-                  control={
-                    <Radio
-                      icon={
-                        <Box
-                          sx={{
-                            width: 18,
-                            height: 18,
-                            borderRadius: "50%",
-                            border: "2px solid #fff",
-                            backgroundColor: "#fff",
-                          }}
-                        />
-                      }
-                      checkedIcon={
-                        <Box
-                          sx={{
-                            width: 18,
-                            height: 18,
-                            borderRadius: "50%",
-                            backgroundColor: "#fff",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              width: 11,
-                              height: 11,
-                              borderRadius: "50%",
-                              backgroundColor: "#34C759",
-                            }}
-                          />
-                        </Box>
-                      }
-                    />
-                  }
-                  label="Resolved"
-                />
-              </RadioGroup>
-            </FormControl>
+            {/* Replace RadioGroup with a TextField select */}
+            <TextField
+              select
+              value={statusValue}
+              onChange={handleStatusChange}
+              size="small"
+              sx={{ minWidth: 200 }}
+            >
+              <MenuItem value="Awaiting Agent">Awaiting Agent</MenuItem>
+              <MenuItem value="Awaiting User">Awaiting User</MenuItem>
+              <MenuItem value="Pending">Pending</MenuItem>
+              <MenuItem value="Resolved">Resolved</MenuItem>
+            </TextField>
           </Box>
           <Box>
-              {/* Button with text, visible on small screens and up */}
-              <Button
-                variant="outlined"
-                color="error"
-                startIcon={<DeleteIcon />}
-                onClick={handleDeleteTicket}
-                sx={{ 
-                    display: { xs: 'none', sm: 'inline-flex' },
-                    textTransform: 'none', 
-                    fontWeight: 550 ,
-                    p:1.5,
-                    mt:2,
-                }}
-              >
-                Delete Ticket
-              </Button>
-              {/* Icon-only button, visible only on extra-small screens */}
-              <IconButton
-                color="error"
-                onClick={handleDeleteTicket}
-                sx={{ display: { xs: 'inline-flex', sm: 'none' } }}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Box>
+            {/* Button with text, visible on small screens and up */}
+            <Button
+              variant="outlined"
+              color="error"
+              startIcon={<DeleteIcon />}
+              onClick={handleDeleteTicket}
+              sx={{
+                display: { xs: "none", sm: "inline-flex" },
+                textTransform: "none",
+                fontWeight: 550,
+                p: 1.5,
+                mt: 2,
+              }}
+            >
+              Delete Ticket
+            </Button>
+            {/* Icon-only button, visible only on extra-small screens */}
+            <IconButton
+              color="error"
+              onClick={handleDeleteTicket}
+              sx={{ display: { xs: "inline-flex", sm: "none" } }}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Box>
         </Box>
         <Box mt={2}>
           <Typography
@@ -356,7 +301,6 @@ const TicketDetailsPage = () => {
             </Box>
           )}
         </Box>
-
         {/* Corrected Reply Section */}
         <InfoSection title="Description" content={ticketData.description} />
 
@@ -365,6 +309,20 @@ const TicketDetailsPage = () => {
           ticketData.replies
             .slice(1)
             .map((reply) => <ReplyCard key={reply._id} reply={reply} />)}
+        {/* This is the new conversation view */}
+        <Box mt={2}>
+          <Typography
+            variant="h6"
+            fontWeight={600}
+            sx={{ mb: 1.5, color: "text.primary" }}
+          >
+            Conversation
+          </Typography>
+          {ticketData.replies &&
+            ticketData.replies.map((reply) => (
+              <ReplyCard key={reply._id} reply={reply} />
+            ))}
+        </Box>
 
         {/* Reply Input Field */}
         <Box component="form" onSubmit={handleReplySubmit} mt={3}>
@@ -378,12 +336,6 @@ const TicketDetailsPage = () => {
               "& .MuiOutlinedInput-root": {
                 backgroundColor: "background.default",
                 borderRadius: 2,
-                "& fieldset": {
-                  borderColor: "#334155",
-                },
-                "&:hover fieldset": {
-                  borderColor: "primary.main",
-                },
               },
             }}
             InputProps={{

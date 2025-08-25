@@ -16,11 +16,13 @@ import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import PersonIcon from "@mui/icons-material/Person";
+import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import { Link } from "react-router-dom";
 
 // A reusable component for displaying a single statistic
 const StatCard = ({ title, value, icon, color }) => (
-  <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+  <Grid size={{ xs: 12, sm: 6, md: 4 }}>
     <Paper
       sx={{
         p: 3,
@@ -71,11 +73,17 @@ const DashboardPage = () => {
   }, [status, dispatch, user]);
 
   const totalTickets = tickets.length;
-  const openTickets = tickets.filter(
-    (ticket) => ticket.status === "Open"
+  const awaitingAgentTickets = tickets.filter(
+    (ticket) => ticket.status === "Awaiting Agent"
   ).length;
-  const closedTickets = tickets.filter(
-    (ticket) => ticket.status === "Closed"
+  const awaitingUserTickets = tickets.filter(
+    (ticket) => ticket.status === "Awaiting User"
+  ).length;
+  const pendingTickets = tickets.filter(
+    (ticket) => ticket.status === "Pending"
+  ).length;
+  const resolvedTickets = tickets.filter(
+    (ticket) => ticket.status === "Resolved"
   ).length;
   const recentTickets = tickets.slice(0, 5); // Get the 5 most recent tickets
 
@@ -93,14 +101,26 @@ const DashboardPage = () => {
           color="primary.main"
         />
         <StatCard
-          title="Open Tickets"
-          value={openTickets}
+          title="Awaiting Agent"
+          value={awaitingAgentTickets}
           icon={<RadioButtonUncheckedIcon sx={{ fontSize: "inherit" }} />}
           color="#FFB800"
         />
         <StatCard
-          title="Closed Tickets"
-          value={closedTickets}
+          title="Awaiting User"
+          value={awaitingUserTickets}
+          icon={<PersonIcon sx={{ fontSize: "inherit" }} />}
+          color="#246AED" 
+        />
+        <StatCard
+          title="Pending"
+          value={pendingTickets}
+          icon={<HourglassTopIcon sx={{ fontSize: "inherit" }} />}
+          color="#9b59b6"
+        />
+        <StatCard
+          title="Resolved"
+          value={resolvedTickets}
           icon={<CheckCircleOutlineIcon sx={{ fontSize: "inherit" }} />}
           color="#34C759"
         />
@@ -137,6 +157,11 @@ const DashboardPage = () => {
                   textDecoration: "none",
                   // color: 'inherit',
                   color: "#246aed",
+                  transition: "color 0.2s ease, text-decoration 0.2s ease",
+                  "&:hover": {
+                    color: "#9bbbefff", // slightly darker blue
+                    // textDecoration: "underline",
+                  },
                 }}
               >
                 <ListItemText

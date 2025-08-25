@@ -40,10 +40,10 @@ const MyTicketsPage = () => {
   };
 
   const activeTickets = filteredTickets.filter(
-    (ticket) => ticket.status === "Open"
+    (ticket) => ticket.status !== "Resolved"
   );
   const completedTickets = filteredTickets.filter(
-    (ticket) => ticket.status === "Closed"
+    (ticket) => ticket.status === "Resolved"
   );
 
   let content;
@@ -55,11 +55,18 @@ const MyTicketsPage = () => {
       </Typography>
     );
   } else if (ticketStatus === "succeeded") {
+    const ticketsToShow = tabIndex === 0 ? activeTickets : completedTickets;
     content = (
       <Box>
-        {(tabIndex === 0 ? activeTickets : completedTickets).map((ticket) => (
-          <TicketCard key={ticket._id} {...ticket} />
-        ))}
+        {ticketsToShow.length > 0 ? (
+          ticketsToShow.map((ticket) => (
+            <TicketCard key={ticket._id} {...ticket} />
+          ))
+        ) : (
+          <Typography align="center" sx={{ mt: 4, color: "text.secondary" }}>
+            No tickets found in this category.
+          </Typography>
+        )}
       </Box>
     );
   } else if (ticketStatus === "failed") {
@@ -118,7 +125,7 @@ const MyTicketsPage = () => {
             flexDirection: { xs: "column", sm: "row" },
             alignItems: "center",
             gap: 2,
-            
+
             // Take full width on mobile to contain its full-width children
             width: { xs: "100%", sm: "auto" },
           }}

@@ -45,8 +45,10 @@ const ticketSchema = new mongoose.Schema(
     status: {
       type: String,
       required: true,
-      enum: ["Open", "Closed"],
-      default: "Open",
+      // Updated the list of allowed statuses
+      enum: ["Awaiting Agent", "Awaiting User", "Pending", "Resolved"], 
+      // Changed the default for new tickets
+      default: "Awaiting Agent",
     },
     tags: {
       type: [String],
