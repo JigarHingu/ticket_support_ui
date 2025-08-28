@@ -16,9 +16,33 @@ const generateTicketId = () => {
 
 // @desc    Get all tickets
 // @route   GET /api/tickets
+// const getTickets = async (req, res) => {
+//   try {
+//     const tickets = await Ticket.find({}).sort({ createdAt: -1 });
+//     res.status(200).json(tickets);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
+// @desc    Get tickets (all for admins, own for users)
+// @route   GET /api/tickets
 const getTickets = async (req, res) => {
   try {
-    const tickets = await Ticket.find({}).sort({ createdAt: -1 });
+    // Find the logged-in user to check their role
+    const user = await User.findById(req.user.id);
+
+    let tickets;
+    if (user.role === "Admin") {
+      // If user is an Admin, find all tickets
+      tickets = await Ticket.find({}).sort({ createdAt: -1 });
+    } else {
+      // Otherwise, find only the tickets that belong to this user
+      tickets = await Ticket.find({ user: req.user.id }).sort({
+        createdAt: -1,
+      });
+    }
+
     res.status(200).json(tickets);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -56,6 +80,7 @@ const createTicket = async (req, res) => {
     };
 
     const newTicket = await Ticket.create({
+      user: userId,
       ticketId, // Add the new ID here
       title,
       description, // We still save the main description

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Box,
   Typography,
@@ -12,14 +12,15 @@ import {
   IconButton,
   Drawer,
   useTheme,
-  Button, 
-} from '@mui/material';
-import { NavLink, Outlet, Link } from 'react-router-dom'; 
-import ArticleIcon from '@mui/icons-material/Article';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import MenuIcon from '@mui/icons-material/Menu';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp'; 
-import QuizIcon from '@mui/icons-material/Quiz';
+  Button,
+} from "@mui/material";
+import { NavLink, Outlet, Link } from "react-router-dom";
+import ArticleIcon from "@mui/icons-material/Article";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import MenuIcon from "@mui/icons-material/Menu";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import QuizIcon from "@mui/icons-material/Quiz";
+import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 
 const drawerWidth = 240;
 
@@ -32,9 +33,14 @@ const AdminLayout = () => {
   };
 
   const navItems = [
-    { text: 'Dashboard', icon: <DashboardIcon />, path: '/admin/dashboard' },
-    { text: 'Manage Articles', icon: <ArticleIcon />, path: '/admin/articles' },
-    { text: 'Manage FAQs', icon: <QuizIcon />, path: '/admin/faqs' },
+    { text: "Dashboard", icon: <DashboardIcon />, path: "/admin/dashboard" },
+    { text: "Manage Articles", icon: <ArticleIcon />, path: "/admin/articles" },
+    { text: "Manage FAQs", icon: <QuizIcon />, path: "/admin/faqs" },
+    {
+      text: "Manage Tickets",
+      icon: <ConfirmationNumberIcon />,
+      path: "/admin/tickets",
+    },
   ];
 
   const drawerContent = (
@@ -52,10 +58,10 @@ const AdminLayout = () => {
               to={item.path}
               onClick={handleDrawerToggle}
               sx={{
-                '&.active': {
+                "&.active": {
                   backgroundColor: theme.palette.action.selected,
                   color: theme.palette.primary.main,
-                  '& .MuiListItemIcon-root': {
+                  "& .MuiListItemIcon-root": {
                     color: theme.palette.primary.main,
                   },
                 },
@@ -71,18 +77,18 @@ const AdminLayout = () => {
   );
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: "flex" }}>
       {/* Top AppBar */}
       <AppBar
         position="fixed"
         sx={{
           width: { md: `calc(100% - ${drawerWidth}px)` },
           ml: { md: `${drawerWidth}px` },
-          backgroundColor: 'background.paper',
-          color: 'text.primary',
-          boxShadow: 'none',
-          borderBottom: '1px solid',
-          borderColor: 'divider',
+          backgroundColor: "background.paper",
+          color: "text.primary",
+          boxShadow: "none",
+          borderBottom: "1px solid",
+          borderColor: "divider",
           zIndex: theme.zIndex.drawer + 1,
         }}
       >
@@ -92,7 +98,7 @@ const AdminLayout = () => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: 'none' } }}
+            sx={{ mr: 2, display: { md: "none" } }}
           >
             <MenuIcon />
           </IconButton>
@@ -100,14 +106,14 @@ const AdminLayout = () => {
             Dashboard
           </Typography>
           {/* This Box pushes the button to the far right */}
-          <Box sx={{ flexGrow: 1 }} /> 
+          <Box sx={{ flexGrow: 1 }} />
           {/* Add the "Back to Main Site" button */}
           <Button
             component={Link}
             to="/"
             variant="outlined"
             startIcon={<ExitToAppIcon />}
-            sx={{ textTransform: 'none', fontWeight: 600, p: '10px' }}
+            sx={{ textTransform: "none", fontWeight: 600, p: "10px" }}
           >
             Back to Main Site
           </Button>
@@ -124,14 +130,12 @@ const AdminLayout = () => {
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
-          ModalProps={{ keepMounted: true,
-            disableRestoreFocus: true
-           }}
+          ModalProps={{ keepMounted: true }}
           sx={{
-            display: { xs: 'block', md: 'none' },
-            '& .MuiDrawer-paper': {
+            display: { xs: "block", md: "none" },
+            "& .MuiDrawer-paper": {
               width: drawerWidth,
-              backgroundColor: 'background.paper',
+              backgroundColor: "background.paper",
             },
           }}
         >
@@ -142,12 +146,12 @@ const AdminLayout = () => {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: 'none', md: 'block' },
-            '& .MuiDrawer-paper': {
+            display: { xs: "none", md: "block" },
+            "& .MuiDrawer-paper": {
               width: drawerWidth,
-              backgroundColor: 'background.paper',
-              borderRight: '1px solid',
-              borderColor: 'divider',
+              backgroundColor: "background.paper",
+              borderRight: "1px solid",
+              borderColor: "divider",
             },
           }}
           open
@@ -159,12 +163,13 @@ const AdminLayout = () => {
       {/* Main Content */}
       <Box
         component="main"
+        id="main-content"
         sx={{
           flexGrow: 1,
           p: { xs: 2, sm: 3 },
           width: { md: `calc(100% - ${drawerWidth}px)` },
-          backgroundColor: 'background.default',
-          minHeight: '100vh',
+          backgroundColor: "background.default",
+          minHeight: "100vh",
         }}
       >
         <Toolbar />

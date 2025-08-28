@@ -60,7 +60,7 @@ const MyTicketsPage = () => {
       <Box>
         {ticketsToShow.length > 0 ? (
           ticketsToShow.map((ticket) => (
-            <TicketCard key={ticket._id} {...ticket} />
+            <TicketCard key={ticket._id} {...ticket} showRepliedBy={false} />
           ))
         ) : (
           <Typography align="center" sx={{ mt: 4, color: "text.secondary" }}>
@@ -150,7 +150,7 @@ const MyTicketsPage = () => {
               fontSize: "1rem",
               fontWeight: "500",
               px: 2.5,
-              py: 1,
+              py: 1.1,
             }}
           >
             Create New Ticket
@@ -167,7 +167,7 @@ const MyTicketsPage = () => {
       </Box> */}
 
       {/* Table Headers */}
-      <TicketListHeader />
+      <TicketListHeader showRepliedBy={false} />
 
       {/* Render the content based on the status */}
       {content}

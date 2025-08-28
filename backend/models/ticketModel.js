@@ -28,6 +28,12 @@ const replySchema = new Schema(
 
 const ticketSchema = new mongoose.Schema(
   {
+    // This new field links the ticket to a user
+    user: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
     // This is the new field for the user-friendly ID
     ticketId: {
       type: String,
@@ -46,7 +52,7 @@ const ticketSchema = new mongoose.Schema(
       type: String,
       required: true,
       // Updated the list of allowed statuses
-      enum: ["Awaiting Agent", "Awaiting User", "Pending", "Resolved"], 
+      enum: ["Awaiting Agent", "Awaiting User", "Pending", "Resolved"],
       // Changed the default for new tickets
       default: "Awaiting Agent",
     },
