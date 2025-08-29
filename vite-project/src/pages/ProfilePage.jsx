@@ -276,6 +276,7 @@ const ProfilePage = () => {
                   name="role"
                   value={profileData.role}
                   onChange={handleInputChange}
+                  disabled
                 >
                   <MenuItem value="Admin">Admin</MenuItem>
                   <MenuItem value="Support Team">Support Team</MenuItem>

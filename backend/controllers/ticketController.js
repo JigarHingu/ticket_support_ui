@@ -14,17 +14,6 @@ const generateTicketId = () => {
   return `TKT-${year}${month}${day}-${hours}${minutes}${seconds}`;
 };
 
-// @desc    Get all tickets
-// @route   GET /api/tickets
-// const getTickets = async (req, res) => {
-//   try {
-//     const tickets = await Ticket.find({}).sort({ createdAt: -1 });
-//     res.status(200).json(tickets);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
 // @desc    Get tickets (all for admins, own for users)
 // @route   GET /api/tickets
 const getTickets = async (req, res) => {

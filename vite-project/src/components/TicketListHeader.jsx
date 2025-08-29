@@ -37,7 +37,6 @@ const TicketListHeader = ({ showRepliedBy = true }) => {
           Next Action
         </GridHeaderCell>
       </Grid>
-      {/* </Grid> */}
     </Box>
   );
 };

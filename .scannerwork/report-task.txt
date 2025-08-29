@@ -1,0 +1,6 @@
+projectKey=Ticket-Support
+serverUrl=http://localhost:9000
+serverVersion=25.8.0.112029
+dashboardUrl=http://localhost:9000/dashboard?id=Ticket-Support
+ceTaskId=d7a0b900-fc67-4c99-a6d1-f569286e3743
+ceTaskUrl=http://localhost:9000/api/ce/task?id=d7a0b900-fc67-4c99-a6d1-f569286e3743

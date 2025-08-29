@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { registerUser, loginUser, updateUserProfile, toggleSaveGuide, getUserStats } = require('../controllers/userController');
-const { protect } = require('../middleware/authMiddleware');
+const { registerUser, loginUser, updateUserProfile, toggleSaveGuide, getUserStats, getAllUsers, updateUserRole } = require('../controllers/userController');
+const { protect, admin } = require('../middleware/authMiddleware');
 
 // Route for user registration
 // This will correspond to POST /api/users/register
@@ -12,7 +12,7 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 
 // Route for updating user profile
-// 2. This route is now protected. The 'protect' middleware will run first.
+// This route is now protected. The 'protect' middleware will run first.
 // If the user is authenticated, it will then call 'updateUserProfile'.
 router.patch('/profile', protect, updateUserProfile);
 
@@ -21,5 +21,11 @@ router.patch('/save-guide', protect, toggleSaveGuide)
 
 // Route for getting user stats (must be protected)
 router.get('/stats', protect, getUserStats);
+
+// Route for getting all users (must be protected and for admins only)
+router.get("/", protect, admin, getAllUsers);
+
+// Route for an admin to update a user's role
+router.put("/:id", protect, admin, updateUserRole);
 
 module.exports = router;

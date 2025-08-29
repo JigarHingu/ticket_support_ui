@@ -18,11 +18,7 @@ const guideSchema = new Schema({
     type: [String],
     default: [],
   },
-  // We can add a field for the guide's content later
-  // content: {
-  //   type: String,
-  //   required: true,
-  // }
+  
 }, { timestamps: true });
 
 const Guide = mongoose.model('Guide', guideSchema);

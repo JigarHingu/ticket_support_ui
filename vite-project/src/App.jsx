@@ -28,6 +28,7 @@ import DashboardPage from "./pages/DashboardPage";
 import ManageFaqsPage from "./pages/ManageFaqsPage";
 import AdminTicketListPage from "./pages/AdminTicketListPage";
 import AdminLayout from "./components/shared/AdminLayout";
+import ManageUsersPage from "./pages/ManageUsersPage";
 
 // Layout for the main user-facing application
 const UserLayout = () => {
@@ -162,6 +163,7 @@ function App() {
       {/* Protected Routes for Admin Users, wrapped in the AdminLayout */}
       <Route path="/admin" element={<AdminRoute />}>
         <Route path="dashboard" element={<DashboardPage />} />
+        <Route path="users" element={<ManageUsersPage />} /> 
         <Route path="articles" element={<ArticleListPage />} />
         <Route path="articles/create" element={<CreateArticlePage />} />
         <Route path="articles/edit/:id" element={<EditArticlePage />} />

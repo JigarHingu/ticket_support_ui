@@ -21,6 +21,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import QuizIcon from "@mui/icons-material/Quiz";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
+import GroupIcon from "@mui/icons-material/Group";
 
 const drawerWidth = 240;
 
@@ -34,6 +35,7 @@ const AdminLayout = () => {
 
   const navItems = [
     { text: "Dashboard", icon: <DashboardIcon />, path: "/admin/dashboard" },
+    { text: "Manage Users", icon: <GroupIcon />, path: "/admin/users" },
     { text: "Manage Articles", icon: <ArticleIcon />, path: "/admin/articles" },
     { text: "Manage FAQs", icon: <QuizIcon />, path: "/admin/faqs" },
     {

@@ -51,20 +51,18 @@ const registerUser = async (req, res) => {
     // Create a token
     const token = createToken(user._id);
 
-    res
-      .status(201)
-      .json({
-        user: {
-          _id: user._id,
-          userId: user.userId,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-          phone: user.phone,
-          company: user.company,
-        },
-        token,
-      });
+    res.status(201).json({
+      user: {
+        _id: user._id,
+        userId: user.userId,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        phone: user.phone,
+        company: user.company,
+      },
+      token,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -91,20 +89,18 @@ const loginUser = async (req, res) => {
     // Create a token
     const token = createToken(user._id);
 
-    res
-      .status(200)
-      .json({
-        user: {
-          _id: user._id,
-          userId: user.userId,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-          phone: user.phone,
-          company: user.company,
-        },
-        token,
-      });
+    res.status(200).json({
+      user: {
+        _id: user._id,
+        userId: user.userId,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        phone: user.phone,
+        company: user.company,
+      },
+      token,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -193,10 +189,53 @@ const getUserStats = async (req, res) => {
   }
 };
 
+// @desc    Get all users (Admin only)
+// @route   GET /api/users
+const getAllUsers = async (req, res) => {
+  try {
+    // Find all users and exclude the password field for security
+    const users = await User.find({}).select("-password");
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Add this new function to your userController.js file
+
+// @desc    Update a user's role (Admin only)
+// @route   PUT /api/users/:id
+const updateUserRole = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (user) {
+      // Set the user's role to the new one sent in the request body
+      user.role = req.body.role || user.role;
+      const updatedUser = await user.save();
+
+      // Send back the updated user details (excluding password)
+      res.json({
+        _id: updatedUser._id,
+        userId: updatedUser.userId,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        role: updatedUser.role,
+      });
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   updateUserProfile,
   toggleSaveGuide,
   getUserStats,
+  getAllUsers,
+  updateUserRole,
 };
