@@ -11,9 +11,31 @@ const articleRoutes = require('./routes/articleRoutes');
 
 const app = express();
 
+// --- CORS Configuration ---
+
+// List of allowed origins (your frontend domains)
+const allowedOrigins = [
+  'https://www.your-production-app.com', // Your live frontend URL
+  'http://localhost:5173'                 // Your local development URL
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Check if the request's origin is in our whitelist or if it's not a browser request (e.g., Postman)
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true // Optional: If you need to allow cookies to be sent
+};
+
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+// Use the configured CORS middleware
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(express.static("public"));
 
