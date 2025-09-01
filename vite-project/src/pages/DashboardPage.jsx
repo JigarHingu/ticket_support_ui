@@ -93,7 +93,7 @@ const DashboardPage = () => {
         Admin Dashboard
       </Typography>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         <StatCard
           title="Total Tickets"
           value={totalTickets}

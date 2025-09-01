@@ -38,7 +38,7 @@ const ProfilePage = () => {
 
   // This useEffect hook will now safely populate the form AFTER the user data has loaded
   useEffect(() => {
-    if (user && user.user) {
+    if (user?.user) {
       // Check that user and user.user exist
       setProfileData({
         name: user.user.name || "",

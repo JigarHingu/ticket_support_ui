@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types'; 
 import {
   Box,
   Typography,
@@ -140,6 +141,11 @@ const FaqSection = ({ searchQuery }) => {
       </Box>
     </Box>
   );
+};
+
+// Add the prop validation
+FaqSection.propTypes = {
+  searchQuery: PropTypes.string,
 };
 
 export default FaqSection;

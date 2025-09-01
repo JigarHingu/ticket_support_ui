@@ -11,6 +11,8 @@ const articleRoutes = require('./routes/articleRoutes');
 
 const app = express();
 
+app.disable('x-powered-by');
+
 // --- CORS Configuration ---
 
 // List of allowed origins (your frontend domains)

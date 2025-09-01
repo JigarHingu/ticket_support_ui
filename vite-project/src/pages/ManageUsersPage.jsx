@@ -4,21 +4,18 @@ import { useSelector } from 'react-redux';
 import {
   Box,
   Typography,
-  Paper,
   Select,
   MenuItem,
   CircularProgress,
   Alert,
   Grid,
   Chip,
-  useTheme,
 } from '@mui/material';
 
 const ManageUsersPage = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const theme = useTheme();
 
   const { user: authUser } = useSelector((state) => state.auth);
   const token = authUser?.token;

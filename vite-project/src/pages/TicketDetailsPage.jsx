@@ -258,8 +258,8 @@ const TicketDetailsPage = () => {
                   display: { xs: "none", sm: "inline-flex" },
                   textTransform: "none",
                   fontWeight: 550,
-                  p: 1.5,
-                  mt: 2,
+                  p: 1,
+                  mt: 4,
                 }}
               >
                 Delete Ticket

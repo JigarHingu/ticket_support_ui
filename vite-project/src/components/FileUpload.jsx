@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
 import UploadFileIcon from '@mui/icons-material/UploadFile'; 
 
@@ -40,6 +41,11 @@ const FileUpload = ({ onUpload }) => {
       </Typography>
     </Box>
   );
+};
+
+// Add the prop validation block
+FileUpload.propTypes = {
+  onUpload: PropTypes.func.isRequired,
 };
 
 export default FileUpload;

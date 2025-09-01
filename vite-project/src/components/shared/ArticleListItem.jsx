@@ -1,4 +1,5 @@
 import { Box, Typography, Chip, IconButton } from '@mui/material';
+import PropTypes from 'prop-types';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -11,7 +12,7 @@ const ArticleListItem = ({ article, onEdit, onDelete }) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        p: 2,
+        p: 3,
         backgroundColor: 'background.paper',
         borderRadius: 2,
         mb: 1.5,
@@ -23,7 +24,7 @@ const ArticleListItem = ({ article, onEdit, onDelete }) => {
           Category: {article.category}
         </Typography>
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 5 }}>
         <Chip label={article.status} color={statusColor} size="small" />
         <Typography variant="body2" color="text.secondary">
           by {article.author.name}
@@ -39,6 +40,20 @@ const ArticleListItem = ({ article, onEdit, onDelete }) => {
       </Box>
     </Box>
   );
+};
+
+// Add the prop validation block
+ArticleListItem.propTypes = {
+  onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  article: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    author: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default ArticleListItem;

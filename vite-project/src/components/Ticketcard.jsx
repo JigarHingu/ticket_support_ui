@@ -1,6 +1,6 @@
 import { Box, Grid, Typography } from "@mui/material";
+import PropTypes from "prop-types";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
-// import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import TicketTags from "./shared/TicketTags";
 import StatusChip from "./shared/StatusChip";
 import TicketActionButton from "./shared/TicketActionButton";
@@ -26,10 +26,20 @@ const TicketCard = ({
     hour12: true,
   });
 
+  // Add the prop validation block
+  TicketCard.propTypes = {
+    _id: PropTypes.string.isRequired,
+    ticketId: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+    replies: PropTypes.array.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    showRepliedBy: PropTypes.bool,
+  };
+
   // Get the name of the first replier (the creator)
   const creatorName = replies && replies.length > 0 ? replies[0].name : "N/A";
-
-  // console.log(`Rendering TicketCard with _id: ${_id}`);
 
   return (
     <Box

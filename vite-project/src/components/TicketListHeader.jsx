@@ -1,4 +1,5 @@
 import { Box, Grid } from "@mui/material";
+import PropTypes from "prop-types";
 import GridHeaderCell from "./shared/GridHeaderCell";
 
 const TicketListHeader = ({ showRepliedBy = true }) => {
@@ -26,7 +27,7 @@ const TicketListHeader = ({ showRepliedBy = true }) => {
             Replied By
           </GridHeaderCell>
         )}
-        
+
         <GridHeaderCell size={{ sm: 2.2, lg: 2.1 }} center>
           Date
         </GridHeaderCell>
@@ -41,4 +42,8 @@ const TicketListHeader = ({ showRepliedBy = true }) => {
   );
 };
 
+// Add the prop validation block
+TicketListHeader.propTypes = {
+  showRepliedBy: PropTypes.bool,
+};
 export default TicketListHeader;
