@@ -19,19 +19,20 @@ const generateTicketId = () => {
 const getTickets = async (req, res) => {
   try {
     // Find the logged-in user to check their role
-    const user = await User.findById(req.user.id);
-
-    let tickets;
-    if (user.role === "Admin") {
-      // If user is an Admin, find all tickets
-      tickets = await Ticket.find({}).sort({ createdAt: -1 });
-    } else {
-      // Otherwise, find only the tickets that belong to this user
-      tickets = await Ticket.find({ user: req.user.id }).sort({
-        createdAt: -1,
-      });
+    const user = req.user; 
+    if (!user) {
+        return res.status(404).json({ error: "User not found." });
     }
 
+    let tickets;
+    if (user.role === 'Admin') {
+      // If user is an Admin, find all tickets
+      tickets = await Ticket.find({}).sort({ createdAt: -1 }).populate('user', 'name');
+    } else {
+      // Otherwise, find only the tickets that belong to this user
+      tickets = await Ticket.find({ user: user._id }).sort({ createdAt: -1 }).populate('user', 'name');
+    }
+  
     res.status(200).json(tickets);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -68,7 +69,7 @@ const createTicket = async (req, res) => {
       role: user.role,
     };
 
-    const newTicket = await Ticket.create({
+    let newTicket = await Ticket.create({
       user: userId,
       ticketId, // Add the new ID here
       title,
@@ -76,6 +77,10 @@ const createTicket = async (req, res) => {
       tags,
       replies: [firstReply], // Add the first reply to the array
     });
+
+    // After creating, populate the user field before sending the response
+    newTicket = await newTicket.populate('user', 'name');
+
     res.status(201).json(newTicket);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -118,7 +123,7 @@ const addTicketReply = async (req, res) => {
     ticket.replies.push(newReply);
     await ticket.save();
 
-    res.status(201).json(ticket);
+    res.status(200).json(ticket);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

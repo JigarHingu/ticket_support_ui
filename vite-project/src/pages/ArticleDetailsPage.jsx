@@ -40,6 +40,16 @@ const ArticleDetailsPage = () => {
             </Container>
         );
     }
+    
+    if (status === 'failed') {
+        return (
+            <Container maxWidth="md" sx={{ py: 4 }}>        
+                <Typography variant="h5" align="center" color="error">
+                    {error || 'Failed to load article.'}
+                </Typography>
+            </Container>
+        );
+    }
 
     const formattedDate = new Date(article.createdAt).toLocaleDateString('en-IN', {
         day: 'numeric',

@@ -19,11 +19,14 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import PersonIcon from "@mui/icons-material/Person";
 import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import { Link } from "react-router-dom";
+import StatusChip from "../components/shared/StatusChip";
 
 // A reusable component for displaying a single statistic
-const StatCard = ({ title, value, icon, color }) => (
+const StatCard = ({ title, value, icon, color, to }) => (
   <Grid size={{ xs: 12, sm: 6, md: 4 }}>
     <Paper
+      component={Link}
+      to={to}
       sx={{
         p: 3,
         display: "flex",
@@ -31,6 +34,12 @@ const StatCard = ({ title, value, icon, color }) => (
         justifyContent: "space-between",
         backgroundColor: "background.paper",
         borderRadius: 3,
+        textDecoration: "none",
+        transition: "box-shadow 0.3s ease",
+        "&:hover": {
+          boxShadow: 3,
+          transform: "translateY(-2px)",
+        },
       }}
     >
       <Box>
@@ -99,36 +108,41 @@ const DashboardPage = () => {
           value={totalTickets}
           icon={<ConfirmationNumberIcon sx={{ fontSize: "inherit" }} />}
           color="primary.main"
+          to="/admin/tickets"
         />
         <StatCard
           title="Awaiting Agent"
           value={awaitingAgentTickets}
           icon={<RadioButtonUncheckedIcon sx={{ fontSize: "inherit" }} />}
           color="#FFB800"
+          to="/admin/tickets"
         />
         <StatCard
           title="Awaiting User"
           value={awaitingUserTickets}
           icon={<PersonIcon sx={{ fontSize: "inherit" }} />}
-          color="#246AED" 
+          color="#246AED"
         />
         <StatCard
           title="Pending"
           value={pendingTickets}
           icon={<HourglassTopIcon sx={{ fontSize: "inherit" }} />}
           color="#9b59b6"
+          to="/admin/tickets"
         />
         <StatCard
           title="Resolved"
           value={resolvedTickets}
           icon={<CheckCircleOutlineIcon sx={{ fontSize: "inherit" }} />}
           color="#34C759"
+          to="/admin/tickets"
         />
         <StatCard
           title="Total Users"
           value={totalUsers}
           icon={<PeopleAltIcon sx={{ fontSize: "inherit" }} />}
           color="#38bdf8"
+          to="/admin/users"
         />
       </Grid>
 
@@ -141,7 +155,7 @@ const DashboardPage = () => {
           borderRadius: 3,
         }}
       >
-        <Typography variant="h6" fontWeight={600} mb={2}>
+        <Typography variant="h6" fontWeight={600} mb={1}>
           Recent Tickets
         </Typography>
         <List disablePadding>
@@ -151,26 +165,35 @@ const DashboardPage = () => {
                 component={Link}
                 to={`/ticket/${ticket._id}`}
                 sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
+                  py: 1.5,
                   borderRadius: 2,
                   textDecoration: "none",
-                  // color: 'inherit',
-                  color: "#246aed",
-                  transition: "color 0.2s ease, text-decoration 0.2s ease",
+                  color: "inherit",
                   "&:hover": {
-                    color: "#9bbbefff", // slightly darker blue
-                    // textDecoration: "underline",
+                    backgroundColor: "action.hover",
                   },
                 }}
               >
                 <ListItemText
                   primary={ticket.title}
-                  secondary={`#${ticket.ticketId}`}
+                  secondary={
+                    <>
+                      <span>#{ticket.ticketId}</span>
+                      <br />
+                      <span>Created by {ticket.user?.name || "Unknown"}</span>
+                    </>
+                  }
                 />
-                <Typography variant="body2" color="text.secondary">
-                  {new Date(ticket.createdAt).toLocaleDateString("en-IN")}
-                </Typography>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ whiteSpace: "nowrap" }}
+                  >
+                    {new Date(ticket.createdAt).toLocaleDateString("en-IN")}
+                  </Typography>
+                  <StatusChip status={ticket.status} />
+                </Box>
               </ListItem>
               {index < recentTickets.length - 1 && <Divider />}
             </Box>

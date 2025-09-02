@@ -10,13 +10,25 @@ const createToken = (_id) => {
 
 // Helper function to generate a user-friendly user ID
 const generateUserId = async () => {
-  // Get the count of existing users to create a unique number
-  const userCount = await User.countDocuments();
-  const nextUserNumber = userCount + 1;
-  // Pad the number with leading zeros to make it 4 digits long
-  const paddedNumber = String(nextUserNumber).padStart(4, "0");
+  // Find the last created user sorted by userId in descending order
+  const lastUser = await User.findOne().sort({ userId: -1 });
+
+  if (!lastUser) {
+    return "USR-0001"; // First user
+  }
+
+  // Extract the number part from the last userId
+  const lastNumber = parseInt(lastUser.userId.split("-")[1], 10);
+
+  // Increment the number
+  const nextNumber = lastNumber + 1;
+
+  // Pad the number with leading zeros
+  const paddedNumber = String(nextNumber).padStart(4, "0");
+
   return `USR-${paddedNumber}`;
 };
+
 
 // @desc    Register a new user
 // @route   POST /api/users/register

@@ -1,22 +1,34 @@
-import { useState, useEffect } from 'react';
-import { Box, Container, Typography, TextField, Button, Grid, IconButton, InputAdornment, Alert } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { registerUser, reset } from '../store/slices/authSlice';
+import { useState, useEffect } from "react";
+import {
+  Box,
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Grid,
+  IconButton,
+  InputAdornment,
+  Alert,
+} from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { registerUser, reset } from "../store/slices/authSlice";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phone: "",
+    company: "",
   });
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,12 +43,15 @@ const RegisterPage = () => {
     }
 
     if (isSuccess) {
-      navigate('/login');
+      navigate("/login");
     } else if (user) {
-      navigate('/'); 
+      navigate("/");
     }
 
-    dispatch(reset()); 
+    // Use a cleanup function for reset to avoid issues
+    return () => {
+      dispatch(reset());
+    };
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const handleInputChange = (event) => {
@@ -50,12 +65,14 @@ const RegisterPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
     } else {
       const userData = {
         name: formData.name,
         email: formData.email,
         password: formData.password,
+        phone: formData.phone,
+        company: formData.company
       };
       dispatch(registerUser(userData));
     }
@@ -67,17 +84,21 @@ const RegisterPage = () => {
         component="form"
         onSubmit={handleSubmit}
         sx={{
-          backgroundColor: 'background.paper',
+          backgroundColor: "background.paper",
           p: { xs: 2, sm: 4 },
           borderRadius: 3,
-          textAlign: 'center',
+          textAlign: "center",
         }}
       >
         <Typography variant="h5" fontWeight={600} mb={3}>
           Create an Account
         </Typography>
 
-        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
 
         <Grid container spacing={2}>
           <Grid size={12}>
@@ -101,12 +122,34 @@ const RegisterPage = () => {
               required
             />
           </Grid>
+          {/* Add the new TextField for Phone Number */}
+          <Grid size={12}>
+            <TextField
+              fullWidth
+              label="Phone Number"
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+              required
+            />
+          </Grid>
+           {/* Add the new TextField for Company Name */}
+          <Grid size={12}>
+            <TextField
+              fullWidth
+              label="Company Name"
+              name="company"
+              value={formData.company}
+              onChange={handleInputChange}
+              required
+            />
+          </Grid>
           <Grid size={12}>
             <TextField
               fullWidth
               label="Password"
               name="password"
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               value={formData.password}
               onChange={handleInputChange}
               required
@@ -129,7 +172,7 @@ const RegisterPage = () => {
               fullWidth
               label="Confirm Password"
               name="confirmPassword"
-              type={showConfirmPassword ? 'text' : 'password'}
+              type={showConfirmPassword ? "text" : "password"}
               value={formData.confirmPassword}
               onChange={handleInputChange}
               required
@@ -137,7 +180,9 @@ const RegisterPage = () => {
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
                       edge="end"
                     >
                       {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
@@ -155,14 +200,21 @@ const RegisterPage = () => {
           color="primary"
           fullWidth
           disabled={isLoading}
-          sx={{ mt: 3, py: 1.5, fontWeight: 600, textTransform: 'none' }}
+          sx={{ mt: 3, py: 1.5, fontWeight: 600, textTransform: "none" }}
         >
-          {isLoading ? 'Registering...' : 'Register'}
+          {isLoading ? "Registering..." : "Register"}
         </Button>
 
         <Typography variant="body2" color="text.secondary" mt={2}>
-          Already have an account?{' '}
-          <Link to="/login" style={{ color: '#a259ff', textDecoration: 'none', fontWeight: 'bold' }}>
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            style={{
+              color: "#a259ff",
+              textDecoration: "none",
+              fontWeight: "bold",
+            }}
+          >
             Log In
           </Link>
         </Typography>
