@@ -62,6 +62,12 @@ const ticketSchema = new mongoose.Schema(
     },
     // array to store all the replies for this ticket
     replies: [replySchema],
+
+    // This field tracks if the ticket is soft-deleted
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
   },
   { timestamps: true }
 );
